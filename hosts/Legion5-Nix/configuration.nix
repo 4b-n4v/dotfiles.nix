@@ -150,7 +150,7 @@
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs;  };
     users = {
       "n4v" = import ./home.nix;
     };
@@ -165,17 +165,40 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    wget
+    killall
     zoxide
+    hyprland
+    hypridle
+    hyprlock
+    grim
+    slurp
+    clipse
+    swappy
+    # SwayNotificationCenter
+    dunst
+    pyprland
+    rofi-wayland
+    (waybar.overrideAttrs (oldAttrs: {
+      mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+      })
+    )
     neovim
     keyd
+    bluetuith
     lshw
+    pulsemixer
+    bluetuith
     kitty
     git
+    meson
+    go
     zsh
     oh-my-zsh
     pika-backup
+    # blueman-applet
+    blueman
+    networkmanagerapplet
     borgbackup
     wl-clipboard
     neofetch
@@ -183,7 +206,11 @@
     eza
     zellij
     clang
+    clang-tools
+    gcc
+    swww
     cmake
+    gnumake
     fzf
     github-cli
     btop
@@ -208,6 +235,22 @@
   # };
 
   # List services that you want to enable:
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  environment.sessionVariables = {
+    # If your cursor becomes invisisble
+    WLR_NO_HARDWARE_CURSORS = "1";
+    # Hint electron apps to use wayland
+    NIXOS_OZONE_WL = "1";
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  };
 
   # Keyd keyboard daemon for linux
   services.keyd = {

@@ -1,0 +1,6 @@
+# Ignore private SSH keys
+.ssh/*
+
+# Ignore private data files
+secrets.nix
+.env

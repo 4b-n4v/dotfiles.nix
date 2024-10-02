@@ -33,7 +33,10 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    (pkgs.nerdfonts.override {
+        fonts = [ "JetBrainsMono" ];
+      }
+    )
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -75,7 +78,18 @@
   #  /etc/profiles/per-user/n4v/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "n4v";
+    userEmail = "ab.navilon@gmail.com";
+  };
+  programs.zsh = {
+    initExtra = ''
+      export NIX_LD=$(nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
+    '';
   };
 
   # Let Home Manager install and manage itself.
